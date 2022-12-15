@@ -2,7 +2,7 @@
   "expo": {
     "name": "EMA-android-2",
     "slug": "EMA-android-2",
-    "version": "2.2.6",
+    "version": "2.2.7",
     "orientation": "portrait",
     "icon": "./assets/images/EMADragonLogo.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 26,
+      "versionCode": 27,
       "package": "com.myoung9300.EMAandroid2",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/EMADragonLogo.png",
