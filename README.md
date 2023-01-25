@@ -10,4 +10,5 @@
 8. click yes, yes, yes...
 9. Test the app to make sure it works (npx expo start --dev-client)
 10. update app
-11. push to app stores
+11. update versionCode in (android/app/build.gradle)
+12. push to app stores

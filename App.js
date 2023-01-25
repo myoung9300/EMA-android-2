@@ -1,20 +1,58 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from "react";
+import { Platform } from "react-native";
+
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { NavigationContainer } from "@react-navigation/native";
+
+import registerNNPushToken from "native-notify";
+import { getPushDataObject } from "native-notify";
+
+import { Amplify, Auth } from "aws-amplify";
+import awsconfig from "./src/aws-exports";
+
+import Purchases from "react-native-purchases";
+
+import { Nunito_800ExtraBold } from "@expo-google-fonts/nunito";
+import { PatrickHandSC_400Regular } from "@expo-google-fonts/patrick-hand-sc";
+import { useFonts } from "expo-font";
+
+import LoginFlow from "./infrastructure/login_flow/LoginFlow";
 
 export default function App() {
+  const APPLE_API_KEY = "appl_nKoGMTbJvrBnTdTNaFLeGJiDnYT";
+  const GOOGLE_API_KEY = "goog_cMxoEZqXjUuLSyIsuzkrgFDUXkI";
+  registerNNPushToken(2348, "hqEMgzJMPWeyd0tRiFUUPl");
+  let pushDataObject = getPushDataObject("");
+
+  useEffect(() => {
+    if ("alertTitle" in pushDataObject) {
+      Alert.alert(pushDataObject.alertTitle, pushDataObject.alertMessage);
+    }
+  });
+  useEffect(() => {
+    Purchases.setDebugLogsEnabled(true);
+    if (Platform.OS === "ios") {
+      Purchases.configure({ apiKey: APPLE_API_KEY });
+    } else if (Platform.OS === "android") {
+      Purchases.configure({ apiKey: GOOGLE_API_KEY });
+    }
+  }, []);
+
+  Amplify.configure(awsconfig);
+  let [fontsLoaded, error] = useFonts({
+    Nunito_800ExtraBold,
+    PatrickHandSC_400Regular,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <LoginFlow />
+      </NavigationContainer>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
