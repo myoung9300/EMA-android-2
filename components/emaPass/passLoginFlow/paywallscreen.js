@@ -4,25 +4,27 @@ import Purchases from "react-native-purchases";
 import PackageItem from "./packageItem";
 import RestorePurchasesButton from "./restorePurch";
 import styles from "../styles";
+import { ActivityIndicator } from "react-native-paper";
 
 const PaywallScreen = ({ navigation }) => {
   const [packages, setPackages] = useState([]);
   const [isPurchasing, setIsPurchasing] = useState(false);
 
-  useEffect(() => {
-    const getPackages = async () => {
-      try {
-        const offerings = await Purchases.getOfferings();
-        if (
-          offerings.current !== null &&
-          offerings.current.availablePackages.length !== 0
-        ) {
-          setPackages(offerings.current.availablePackages);
-        }
-      } catch (e) {
-        Alert.alert("Error getting offers", e.message);
+  const getPackages = async () => {
+    try {
+      const offerings = await Purchases.getOfferings();
+      if (
+        offerings.current !== null &&
+        offerings.current.availablePackages.length !== 0
+      ) {
+        setPackages(offerings.current.availablePackages);
       }
-    };
+    } catch (e) {
+      Alert.alert("Error getting offers", e.message);
+    }
+  };
+
+  useEffect(() => {
     getPackages();
   }, []);
 
@@ -31,7 +33,7 @@ const PaywallScreen = ({ navigation }) => {
   const footer = () => {
     return (
       <>
-        <RestorePurchasesButton />
+        <RestorePurchasesButton navigation={navigation} />
         <View style={styles.break} />
         <Text style={styles.subHeadText}>Trial Period Terms</Text>
         <Text style={styles.bodyText}>
@@ -78,18 +80,22 @@ const PaywallScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.page}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={packages}
-        keyExtractor={(item) => item.identifier}
-        renderItem={({ item }) => (
-          <PackageItem data={item} setIsPurchasing={setIsPurchasing} />
-        )}
-        ListHeaderComponent={header}
-        ListHeaderComponentStyle={styles.headerFooterContainer}
-        ListFooterComponent={footer}
-        ListFooterComponentStyle={styles.headerFooterContainer}
-      />
+      {!packages ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={packages}
+          keyExtractor={(item) => item.identifier}
+          renderItem={({ item }) => (
+            <PackageItem data={item} setIsPurchasing={setIsPurchasing} />
+          )}
+          ListHeaderComponent={header}
+          ListHeaderComponentStyle={styles.headerFooterContainer}
+          ListFooterComponent={footer}
+          ListFooterComponentStyle={styles.headerFooterContainer}
+        />
+      )}
       {isPurchasing && <View style={styles.overlay} />}
     </SafeAreaView>
   );
