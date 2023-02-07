@@ -17,12 +17,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "9",
+      "buildNumber": "10",
       "supportsTablet": true,
       "bundleIdentifier": "com.myoung9300.EMAandroid2"
     },
     "android": {
-      "versionCode": 29,
+      "versionCode": 30,
       "package": "com.myoung9300.EMAandroid2",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/EMADragonLogo.png",
