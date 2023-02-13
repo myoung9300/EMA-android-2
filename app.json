@@ -16,11 +16,6 @@
       "url": "https://u.expo.dev/e56a5ab5-19ca-43d2-9443-6d22c90b6442"
     },
     "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "buildNumber": "10",
-      "supportsTablet": true,
-      "bundleIdentifier": "com.myoung9300.EMAandroid2"
-    },
     "android": {
       "versionCode": 30,
       "package": "com.myoung9300.EMAandroid2",

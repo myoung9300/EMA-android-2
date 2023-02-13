@@ -11,7 +11,6 @@
 9. Test the app to make sure it works (npx expo start --dev-client)
 10. update app
 11. update versionCode in (android/app/build.gradle) and in app.json
-12. update buildnumber in app.json (IOS)
-13. eas build (specify which system)
-14. download to computer
-15. push to stores
+12. eas build (specify which system)
+13. download to computer
+14. push to stores
