@@ -11,6 +11,7 @@ const PaywallScreen = ({ navigation }) => {
   const [isPurchasing, setIsPurchasing] = useState(false);
 
   const getPackages = async () => {
+    //show different packages...
     try {
       const offerings = await Purchases.getOfferings();
       if (
